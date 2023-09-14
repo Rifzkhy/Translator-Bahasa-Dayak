@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500&family=JetBrains+Mono:wght@500&display=swap");
+
+* {
+    font-family: "DM Sans", sans-serif;
+}
+
+.jetbrains-mono {
+    font-family: "JetBrains Mono", monospace;
+}
+/* .dm-sans {
+  font-family: "DM Sans", sans-serif;
+} */
+
+body::-webkit-scrollbar {
+  overflow-x: hidden;
+  display: none;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-10 {
+    background-color: #101010;
+}
+
+.translate {
+    border-radius: 10px;
+    background-color: #101010;
+}

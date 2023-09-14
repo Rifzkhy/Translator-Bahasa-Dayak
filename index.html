@@ -1,0 +1,121 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Translate</title>
+    <!-- !Styles -->
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+    <link rel="stylesheet" href="./src/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <style>
+      textarea {
+        resize: none;
+      }
+      .reverse:hover {
+        transition: all ease 1s;
+        transform: rotate(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="p-3">
+      <div class="translate py-5">
+        <div class="row justify-content-center text-white">
+          <div class="col-4 p-3 text-start">
+            <div class="dropdown-center">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pilih bahasa dayak
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Dayak Bakumpai</a></li>
+    <li><a class="dropdown-item" href="#">Dayak Ngaju</a></li>
+  </ul>
+</div>
+          </div>
+          <div class="col-2 p-3 text-center">
+            <h1 class="reverse"><i class="bi-arrow-left-right"></i></h1>
+          </div>
+          <div class="col-4 p-3 text-end">
+            <button class="btn btn-primary" type="button" aria-expanded="false">
+    Bahasa Indonesia
+  </button>
+          </div>
+          <div class="col-10 col-sm-5 py-1">
+            <textarea
+              class="form-dayak form-control jetbrains-mono"
+              placeholder="Teks Dayak . . ."
+              id="translate-from"
+              rows="8"
+            ></textarea>
+          </div>
+          <div class="col-10 col-sm-5 py-1">
+            <textarea
+              class="form-dayak form-control jetbrains-mono"
+              placeholder="Teks Indonesia . . ."
+              id="translate-into"
+              rows="8"
+              readonly
+            ></textarea>
+          </div>
+          <div class="col-10">
+            <div class="d-grid gap-2 py-3">
+              <button
+                class="btn btn-primary"
+                type="button"
+                onclick="translateText()"
+              >
+                TERJEMAHKAN
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- !Script -->
+    
+    <script>
+  let translationData;
+
+  fetch("https://script.google.com/macros/s/AKfycbwrwAeWibjJetYGuyyNUZmQ8mAo7rL7kjldl1ZwU4LHfFm2t7d_pAdEyaaY3jUHB26d/exec")
+    .then(res => res.json())
+    .then(data => {
+      translationData = data.content;
+    });
+
+  function translateText() {
+    var sourceTranslate = document.getElementById("translate-from").value;
+    var destinationTextarea = document.getElementById("translate-into");
+
+    if (translationData) {
+      translationData.forEach(wordPair => {
+        const sourceWord = wordPair[0];
+        const destinationWord = wordPair[1];
+        sourceTranslate = sourceTranslate.replace(new RegExp(sourceWord, 'g'), destinationWord);
+      });
+    }
+
+    destinationTextarea.value = "";
+
+    new TypeIt(destinationTextarea, {
+      speed: 75,
+    })
+      .type(sourceTranslate)
+      .go();
+  }
+</script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
